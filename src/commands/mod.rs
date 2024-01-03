@@ -95,8 +95,8 @@ async fn run_rank_2023(args: Rank2023Args) -> Result<()> {
             "https://gateway.m.fws.qa.nt.ctripcorp.com"
             // "https://api.spotify.com/v1/search"
         }
-        Env::Test => "https://test.com",
-        Env::Prod => "https://prod.com",
+        Env::Test => "https://gateway.m.uat.qa.nt.ctripcorp.com",
+        Env::Prod => "https://m.ctrip.com",
     };
 
     let mut set = JoinSet::new();
