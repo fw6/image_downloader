@@ -1,6 +1,6 @@
 [package]
 name = "image_downloader"
-version = "0.1.0"
+version = "0.1.2"
 edition = "2021"
 repository = "https://github.com/fw6/image_downloader"
 
