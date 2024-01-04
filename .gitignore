@@ -1,2 +1,28 @@
 /target
-images
+.DS_Store
+.pytest_cache
+.vscode/c_cpp_properties.json
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+*.wasm
+
+# Binary files
+*.dylib
+*.a
+*.so
+*.dll
+*.class
+
+# Editor directories and files
+.idea
+xcuserdata/

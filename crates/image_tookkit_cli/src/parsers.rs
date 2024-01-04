@@ -18,10 +18,6 @@ pub fn parse_image_formats(s: &str) -> Result<image::ImageFormat> {
     }
 }
 
-pub fn parse_path(s: &str) -> Result<std::path::PathBuf> {
-    Ok(std::path::PathBuf::from(s))
-}
-
 #[cfg(test)]
 mod test {
     use super::*;
