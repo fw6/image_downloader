@@ -14,7 +14,7 @@ atty.workspace = true
 clap.workspace = true
 console.workspace = true
 futures-util = "0.3.30"
-image = { workspace = true, default-features = false, features = [
+image = { workspace = true, features = [
     "gif",
     "jpeg",
     "jpeg_rayon",
@@ -27,7 +27,7 @@ image = { workspace = true, default-features = false, features = [
     "avif",
     "ico"
 ] }
-image_toolkit = { version = "0.1.2", path = "../image_tookkit" }
+image_toolkit = { version = "0.1.2", path = "../image-tookkit" }
 rayon.workspace = true
 reqwest = { workspace = true, default-features = false, features = ["stream"] }
 tokio.workspace = true
