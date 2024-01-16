@@ -1,0 +1,17 @@
+[package]
+name = "sdk-schemas"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+imagekit = {path = "../imagekit"}
+serde_json.workspace = true
+schemars = {workspace = true, features = ["preserve_order"]}
+itertools.workspace = true
+anyhow.workspace = true

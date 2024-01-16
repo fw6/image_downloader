@@ -1,0 +1,8 @@
+[bindings.kotlin]
+package_name = "com.imagekit.core"
+generate_immutable_records = true
+
+[bindings.swift]
+ffi_module_name = "ImagekitCoreFFI"
+module_name = "ImagekitCore"
+generate_immutable_records = true

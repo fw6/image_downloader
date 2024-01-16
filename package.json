@@ -1,0 +1,20 @@
+{
+    "name": "@ctrip/imagekit-sdk",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build:crates": "cargo build --workspace --release",
+        "schemas": "rimraf ./support/schemas && cargo run --bin sdk-schemas --all-features && node ./support/scripts/schemas.mjs"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^20.11.1",
+        "quicktype-core": "^23.0.81",
+        "rimraf": "^5.0.5",
+        "tslib": "^2.6.2",
+        "typescript": "^5.3.3"
+    }
+}

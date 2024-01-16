@@ -1,0 +1,41 @@
+[package]
+name = "imagekit"
+description = "Some useful image tools"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = ["secrets"]
+
+secrets = []  # Secrets manager API
+internal = [] # Internal testing methods
+
+mobile = ["uniffi", "internal"] # Mobile-specific features
+wasm-bindgen = []
+
+[dependencies]
+anyhow.workspace = true
+atty.workspace = true
+console.workspace = true
+futures-util.workspace = true
+image = { workspace = true }
+mime.workspace = true
+rayon.workspace = true
+reqwest.workspace = true
+rustls.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+serde_json_lodash.workspace = true
+tokio.workspace = true
+uniffi = { workspace = true, optional = true, features = ["tokio"] }
+url.workspace = true
+num.workspace = true
+crossbeam.workspace = true
+colorgrad.workspace = true
+getrandom.workspace = true
+clap = { workspace = true, default-features = false }
+derive_builder = { workspace = true }

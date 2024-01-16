@@ -26,3 +26,5 @@ bld/
 # Editor directories and files
 .idea
 xcuserdata/
+
+node_modules
