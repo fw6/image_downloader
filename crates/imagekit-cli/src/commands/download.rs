@@ -1,4 +1,5 @@
 use anyhow::{anyhow, Ok};
+use clap::Parser;
 use console::Style;
 use futures_util::StreamExt;
 use image::{self, load_from_memory, DynamicImage, ImageFormat};
@@ -7,7 +8,24 @@ use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::io::Write as _;
 use url::Url;
 
-use super::RunArgs;
+use crate::parsers::{parse_image_formats, parse_url};
+
+#[derive(Parser, Debug, Clone)]
+pub struct DownloadArgs {
+    /// The url of the image
+    /// e.g. -u https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF
+    #[clap(short, long, value_parser = parse_url)]
+    url: Option<Url>,
+
+    /// The image format to download, support multiple formats.
+    /// Supported formats: png (png)、jpeg (jpg)、webp (webp)、gif (gif)、avif (avif)、bmp (bmp)、tiff (tiff)、ico (ico)
+    #[clap(short, long, value_parser = parse_image_formats, value_delimiter = ' ', num_args = 1..)]
+    formats: Option<Vec<ImageFormat>>,
+
+    /// The filename of the output image
+    #[clap(short = 'F', long, default_value_t = String::from("image"), value_name = "FILE NAME")]
+    filename: String,
+}
 
 async fn download_image(url: &Url, filename: &str) -> anyhow::Result<(ImageFormat, DynamicImage)> {
     let (image_format, res) = get_image_by_url(&url).await?;
@@ -35,7 +53,7 @@ async fn download_image(url: &Url, filename: &str) -> anyhow::Result<(ImageForma
     Ok((image_format, img))
 }
 
-pub async fn run(args: RunArgs) -> anyhow::Result<()> {
+pub async fn download(args: DownloadArgs) -> anyhow::Result<()> {
     let url = args.url;
     let formats = args.formats;
     let filename = args.filename;
