@@ -12,7 +12,7 @@ use std::sync::Arc;
 // value enum for the command line argument parser
 
 #[derive(ValueEnum, Copy, Clone, Debug)]
-enum ColorStyle {
+pub enum ColorStyle {
     Bookworm,
     Jellyfish,
     Ten,

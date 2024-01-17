@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    color: #0f0f0f;
+    background-color: #f6f6f6;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* https://github.com/codeAdrian/modern-fluid-typography-editor */
+@supports (font-size: clamp(1rem, 1vw, 1.25rem)) {
+
+    /* https://modern-fluid-typography.vercel.app?rootFontSize=16&minSize=16&fluidSize=2.1052632&relativeSize=0.5789474&maxSize=32 */
+    /* font-size: clamp([value-min]rem, [v]vw + [r]rem, [value-max]rem); */
+    /* v = 100 * ([value-max] - [value-min]) / ([breakpoint-max] - [breakpoint-min]) */
+    /* r = ([value-max] * [breakpoint-min] - [value-min] * [breakpoint-max]) / ([breakpoint-min] * [breakpoint-max]) */
+
+    /* v = 100 * (32 - 16) / (1080 - 320) = 2.1052632 */
+    /* r = (32 * 320 - 16 * 1080) / (320 - 1080) / 16 = 0.5789474 */
+    :root {
+        font-size: clamp(1rem, 2.1052632vw + 0.5789474rem, 2rem);
+    }
+}
+
+@supports not (font-size: clamp(1rem, 1vw, 1.25rem)) {
+
+    /*
+    @media (min-width: [breakpoint-min]) {
+        .fluid {
+            font-size: calc([value-min] + ([value-max] - [value-min]) * ((100vw - [breakpoint-min]) / ([breakpoint-max] - [breakpoint-min])));
+        }
+    }
+    @media (min-width: [breakpoint-max]) {
+        .fluid {
+            font-size: [value-max]
+        }
+    }
+    */
+    @media (min-width: 320px) {
+        :root {
+            font-size: calc(16px + (32 - 16) * ((100vw - 320px) / (1080 - 320)));
+        }
+    }
+
+    @media (min-width: 1080px) {
+        :root {
+            font-size: 32px;
+        }
+    }
+}
+
+@-ms-viewport {
+    width: device-width;
+}

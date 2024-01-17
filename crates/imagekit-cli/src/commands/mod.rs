@@ -1,4 +1,5 @@
 mod download_image;
+mod juliafatou;
 use crate::{
     helpers::process_error_output,
     parsers::{parse_image_formats, parse_url},
@@ -21,6 +22,10 @@ struct Args {
 enum Action {
     /// Download image from url
     Run(RunArgs),
+
+    /// Generate an Julia Fatou image.
+    /// example: cargo run --package imagekit_cli --bin imagekit juliafatou --blur 0.6 --scale 1 -c eleven --complex -0.4,0.6 -w 3
+    Juliafatou(juliafatou::JuliafatouArgs),
 }
 
 #[derive(Parser, Debug, Clone)]
@@ -45,6 +50,7 @@ pub async fn handle() -> Result<()> {
 
     let result = match args.action {
         Action::Run(args) => download_image::run(args).await,
+        Action::Juliafatou(args) => juliafatou::gen_julia_fatou(args).await,
     };
 
     process_error_output(result)

@@ -1,0 +1,15 @@
+{
+    "name": "mobile-tauri",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/mobile-tauri/src",
+    "projectType": "application",
+    "targets": {
+        "dev": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cargo tauri dev"
+            }
+        }
+    },
+    "tags": []
+}

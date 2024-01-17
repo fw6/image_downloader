@@ -1,0 +1,19 @@
+{
+    "name": "@ctrip/imagekit.app.mobile.tauri",
+    "version": "0.0.0",
+    "description": "",
+    "type": "module",
+    "scripts": {
+        "start": "vite",
+        "dev": "vite",
+        "build": "vite build",
+        "serve": "vite preview",
+        "tauri": "tauri dev"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@tauri-apps/api": "^2.0.0-alpha.13",
+        "@tauri-apps/plugin-shell": "^2.0.0-alpha.3",
+        "konsta": "^3.1.2"
+    }
+}

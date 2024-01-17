@@ -37,5 +37,5 @@ num.workspace = true
 crossbeam.workspace = true
 colorgrad.workspace = true
 getrandom.workspace = true
-clap = { workspace = true, default-features = false }
+clap = { workspace = true }
 derive_builder = { workspace = true }

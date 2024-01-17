@@ -25,13 +25,14 @@ image = { workspace = true, features = [
     "webp-encoder",
     "bmp",
     "avif",
-    "ico"
+    "ico",
 ] }
 imagekit = { version = "0.1.2", path = "../imagekit" }
 rayon.workspace = true
 reqwest = { workspace = true, default-features = false, features = ["stream"] }
 tokio.workspace = true
 url.workspace = true
+num.workspace = true
 
 [[bin]]
 name = "imagekit"

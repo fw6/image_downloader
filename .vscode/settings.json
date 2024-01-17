@@ -1,8 +1,37 @@
 {
+    "json.schemaDownload.enable": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
     "cSpell.words": [
         "bindgen",
         "dylib",
+        "juliafatou",
+        "ogimage",
         "reqwest",
+        "tauri",
         "uniffi"
-    ]
+    ],
+    "npm.packageManager": "pnpm",
+    "search.exclude": {
+        "**/.git": true,
+        "**/.github": true,
+        "**/.nuxt": true,
+        "**/.output": true,
+        "**/.pnpm": true,
+        "**/.vscode": true,
+        "**/.yarn": true,
+        "**/bower_components": true,
+        "**/dist/**": true,
+        "**/logs": true,
+        "**/node_modules": true,
+        "**/out/**": true,
+        "**/package-lock.json": true,
+        "**/pnpm-lock.yaml": true,
+        "**/tmp": true,
+        "**/dist": true,
+        "**/yarn.lock": true
+    },
+    "js/ts.implicitProjectConfig.checkJs": true,
 }

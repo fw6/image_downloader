@@ -5,4 +5,5 @@ pub mod download;
 mod juliafatou;
 pub mod utils;
 
-pub use juliafatou::JuliafatouBuilder;
+pub use juliafatou::{ColorStyle, JuliafatouBuilder};
+pub mod ogimage;

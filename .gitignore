@@ -28,3 +28,7 @@ bld/
 xcuserdata/
 
 node_modules
+
+
+.nx/cache
+dist

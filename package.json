@@ -1,20 +1,52 @@
 {
     "name": "@ctrip/imagekit-sdk",
-    "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "version": "1.0.0",
+    "type": "module",
+    "private": true,
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "packageManager": "pnpm@8.11.0",
     "scripts": {
+        "preinstall": "npx only-allow pnpm",
         "build:crates": "cargo build --workspace --release",
+        "build:js": "nx run-many --target=build",
         "schemas": "rimraf ./support/schemas && cargo run --bin sdk-schemas --all-features && node ./support/scripts/schemas.mjs"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@nx/js": "^17.2.8",
+        "@tanstack/router-vite-plugin": "^1.4.6",
+        "@tauri-apps/cli": "2.0.0-alpha.20",
         "@types/node": "^20.11.1",
+        "@types/react": "^18.2.48",
+        "@types/react-dom": "^18.2.18",
+        "@vercel/remote-nx": "^1.1.1",
+        "@vitejs/plugin-react": "^4.2.1",
+        "autoprefixer": "^10.4.16",
+        "daisyui": "^4.6.0",
+        "internal-ip": "^8.0.0",
+        "nx": "17.2.8",
+        "nx-cloud": "^16.5.2",
+        "postcss": "^8.4.33",
+        "postcss-preset-env": "^9.3.0",
         "quicktype-core": "^23.0.81",
         "rimraf": "^5.0.5",
+        "tailwindcss": "^3.4.1",
         "tslib": "^2.6.2",
-        "typescript": "^5.3.3"
+        "typescript": "^5.3.3",
+        "vite": "^5.0.11"
+    },
+    "volta": {
+        "node": "20.11.0"
+    },
+    "dependencies": {
+        "@tanstack/react-router": "^1.4.8",
+        "@tanstack/router-devtools": "^1.4.7",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
     }
 }
