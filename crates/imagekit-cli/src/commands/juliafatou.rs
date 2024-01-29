@@ -1,7 +1,6 @@
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 use clap::Parser;
 use imagekit::{ColorStyle, JuliafatouBuilder};
-use num::Complex;
 
 #[derive(Parser, Debug, Clone)]
 pub struct JuliafatouArgs {
@@ -10,10 +9,9 @@ pub struct JuliafatouArgs {
         short,
         long = "dimensions",
         default_value = "1200x1200",
-        value_name = "USIZExUSIZE",
-        value_parser = parse_dimensions
+        value_name = "USIZExUSIZE"
     )]
-    dimensions: (usize, usize),
+    dimensions: String,
 
     /// Output file
     #[clap(
@@ -28,12 +26,11 @@ pub struct JuliafatouArgs {
     #[clap(
         short = 's',
         long = "offset",
-        default_value = "0.0:0.0",
+        default_value = "0.0,0.0",
         allow_hyphen_values = true,
-        value_name = "F64:F64",
-        value_parser = parse_offset
+        value_name = "F64,F64"
     )]
-    off: (f64, f64),
+    off: String,
 
     /// scale factor
     #[clap(short = 'x', long = "scale", default_value_t = 3.0, value_name = "F64")]
@@ -75,10 +72,9 @@ pub struct JuliafatouArgs {
         long = "complex",
         value_name = "F64,F64",
         default_value = "-0.4,0.6",
-        allow_hyphen_values = true,
-        value_parser = parse_complex
+        allow_hyphen_values = true
     )]
-    complex: Complex<f64>,
+    complex: String,
 
     /// overall intensity multiplication factor
     #[clap(short, long, value_name = "F64", default_value_t = 3.0)]
@@ -117,46 +113,4 @@ pub async fn gen_julia_fatou(args: JuliafatouArgs) -> Result<()> {
         .run()?;
 
     Ok(())
-}
-
-fn parse_offset(s: &str) -> Result<(f64, f64)> {
-    let mut iter = s.split(':');
-    let x = iter
-        .next()
-        .ok_or_else(|| anyhow!("Invalid offset"))?
-        .parse()?;
-    let y = iter
-        .next()
-        .ok_or_else(|| anyhow!("Invalid offset"))?
-        .parse()?;
-
-    Ok((x, y))
-}
-
-fn parse_dimensions(s: &str) -> Result<(usize, usize)> {
-    let mut iter = s.split('x');
-    let x = iter
-        .next()
-        .ok_or_else(|| anyhow!("Invalid dimensions"))?
-        .parse()?;
-    let y = iter
-        .next()
-        .ok_or_else(|| anyhow!("Invalid dimensions"))?
-        .parse()?;
-
-    Ok((x, y))
-}
-
-fn parse_complex(s: &str) -> Result<Complex<f64>> {
-    let mut iter = s.split(',');
-    let re = iter
-        .next()
-        .ok_or_else(|| anyhow!("Invalid complex"))?
-        .parse()?;
-    let im = iter
-        .next()
-        .ok_or_else(|| anyhow!("Invalid complex"))?
-        .parse()?;
-
-    Ok(Complex::new(re, im))
 }

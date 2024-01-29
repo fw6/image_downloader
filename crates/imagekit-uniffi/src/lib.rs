@@ -1,12 +1,13 @@
+use std::sync::{Arc, RwLock};
+
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use std::sync::{Arc, RwLock};
 
 uniffi::setup_scaffolding!();
 
 #[derive(Serialize, Deserialize, Default, Debug, JsonSchema)]
 #[serde(default, rename_all = "camelCase", deny_unknown_fields)]
-#[cfg_attr(feature = "mobile", derive(uniffi::Record))]
+#[derive(uniffi::Record)]
 pub struct Example1 {
     pub content: String,
 }
@@ -27,5 +28,9 @@ impl Example2 {
     /// Test method, echoes back the input
     pub fn echo(&self, msg: String) -> String {
         msg
+    }
+
+    pub fn get_content(&self) -> String {
+        self.0.read().unwrap().content.clone()
     }
 }

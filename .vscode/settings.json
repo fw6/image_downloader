@@ -10,6 +10,7 @@
         "juliafatou",
         "ogimage",
         "reqwest",
+        "schemars",
         "tauri",
         "uniffi"
     ],
@@ -22,6 +23,7 @@
         "**/.pnpm": true,
         "**/.vscode": true,
         "**/.yarn": true,
+        "**/Cargo.lock": true,
         "**/bower_components": true,
         "**/dist/**": true,
         "**/logs": true,

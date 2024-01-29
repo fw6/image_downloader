@@ -1,5 +1,5 @@
 [package]
-name = "imagekit_uniffi"
+name = "imagekit-uniffi"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
@@ -15,9 +15,9 @@ crate-type = ["lib", "staticlib", "cdylib"]
 bench = false
 
 [dependencies]
-schemars = {workspace = true}
+schemars = { workspace = true }
 uniffi.workspace = true
-imagekit = { version = "0.1.2", path = "../imagekit" }
+imagekit = { path = "../imagekit", features = ["mobile", "internal"] }
 serde = { workspace = true, features = ["derive"] }
 
 [build-dependencies]

@@ -1,5 +1,5 @@
 [package]
-name = "imagekit_cli"
+name = "imagekit-cli"
 description = "A command line tool for image toolkit"
 version.workspace = true
 edition.workspace = true
@@ -27,7 +27,7 @@ image = { workspace = true, features = [
     "avif",
     "ico",
 ] }
-imagekit = { version = "0.1.2", path = "../imagekit" }
+imagekit = { path = "../imagekit" }
 rayon.workspace = true
 reqwest = { workspace = true, default-features = false, features = ["stream"] }
 tokio.workspace = true

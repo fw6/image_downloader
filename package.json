@@ -10,7 +10,9 @@
     "packageManager": "pnpm@8.11.0",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
+        "dev:mobile-tauri": "nx run mobile-tauri:dev",
         "build:crates": "cargo build --workspace --release",
+        "build:uniffi": "cargo run --package uniffi-bindgen --bin uniffi-bindgen generate ./target/release/libimagekit_uniffi.dylib --library --language swift --language kotlin --no-format --out-dir tmp/bindings",
         "build:js": "nx run-many --target=build",
         "schemas": "rimraf ./support/schemas && cargo run --bin sdk-schemas --all-features && node ./support/scripts/schemas.mjs"
     },

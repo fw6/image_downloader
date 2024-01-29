@@ -13,6 +13,7 @@ default = ["secrets"]
 
 secrets = []  # Secrets manager API
 internal = [] # Internal testing methods
+openapi = []  # OpenAPI client
 
 mobile = ["uniffi", "internal"] # Mobile-specific features
 wasm-bindgen = []
@@ -27,7 +28,7 @@ mime.workspace = true
 rayon.workspace = true
 reqwest.workspace = true
 rustls.workspace = true
-serde.workspace = true
+serde = { version = "1.0.195", features = ["derive"] }
 serde_json.workspace = true
 serde_json_lodash.workspace = true
 tokio.workspace = true
@@ -39,3 +40,4 @@ colorgrad.workspace = true
 getrandom.workspace = true
 clap = { workspace = true }
 derive_builder = { workspace = true }
+salvo = { workspace = true, features = ["oapi"] }
