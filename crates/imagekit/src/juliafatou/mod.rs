@@ -209,7 +209,7 @@ impl Juliafatou {
         };
         // determine maximum number of pixel rows per thread
         let rows_per_band = self.dimensions.1 / threads + 1;
-        let scalex = self.scale / self.dimensions.1 as f64;
+        let scale_x = self.scale / self.dimensions.1 as f64;
 
         // get x/y ratio of the image dimensions
         let ratio = self.dimensions.0 as f64 / self.dimensions.1 as f64;
@@ -239,7 +239,7 @@ impl Juliafatou {
                     spawner.spawn(move |_| {
                         self.partial_render(
                             band,
-                            (scalex, scalex),
+                            (scale_x, scale_x),
                             offset,
                             band_bounds,
                             band_upper_left,
@@ -274,7 +274,7 @@ impl Juliafatou {
             return Ok(());
         }
 
-        let internalbuf = ImageBuffer::<Rgb<u8>, &[u8]>::from_raw(
+        let internal_buf = ImageBuffer::<Rgb<u8>, &[u8]>::from_raw(
             self.dimensions.0 as u32,
             self.dimensions.1 as u32,
             &pixels,
@@ -282,7 +282,7 @@ impl Juliafatou {
         .unwrap();
         // .ok_or(anyhow!("error creating image buffer"))?;
 
-        let blurred = blur(&internalbuf, self.blur);
+        let blurred = blur(&internal_buf, self.blur);
 
         if let Some(mut buffered_writer) = buffered_writer {
             blurred.write_to(&mut buffered_writer, ImageOutputFormat::Png)?;

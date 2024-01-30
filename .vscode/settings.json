@@ -7,12 +7,16 @@
     "cSpell.words": [
         "bindgen",
         "dylib",
+        "Fatou",
+        "feng",
         "juliafatou",
+        "oapi",
         "ogimage",
         "reqwest",
         "schemars",
         "tauri",
-        "uniffi"
+        "uniffi",
+        "unshift"
     ],
     "npm.packageManager": "pnpm",
     "search.exclude": {

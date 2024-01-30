@@ -1,8 +1,9 @@
 mod download;
 mod juliafatou;
-use crate::helpers::process_error_output;
 use anyhow::Result;
 use clap::{Parser, Subcommand};
+
+use crate::helpers::process_error_output;
 
 /// The imagekit cli includes a set of commands for image processing.
 /// - download: Download image from url
@@ -22,7 +23,8 @@ enum Action {
     Download(download::DownloadArgs),
 
     /// Generate an Julia Fatou image set.
-    /// example: cargo run --package imagekit_cli --bin imagekit juliafatou --blur 0.6 --scale 1 -c eleven --complex -0.4,0.6 -w 3
+    /// example: cargo run --package imagekit_cli --bin imagekit juliafatou
+    /// --blur 0.6 --scale 1 -c eleven --complex -0.4,0.6 -w 3
     Juliafatou(juliafatou::JuliafatouArgs),
 }
 
@@ -31,7 +33,7 @@ pub async fn handle() -> Result<()> {
 
     let result = match args.action {
         Action::Download(args) => download::download(args).await,
-        Action::Juliafatou(args) => juliafatou::gen_julia_fatou(args).await,
+        Action::Juliafatou(args) => juliafatou::gen_juliafatou(args).await,
     };
 
     process_error_output(result)

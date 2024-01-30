@@ -93,7 +93,7 @@ pub struct JuliafatouArgs {
     take_time: bool,
 }
 
-pub async fn gen_julia_fatou(args: JuliafatouArgs) -> Result<()> {
+pub async fn gen_juliafatou(args: JuliafatouArgs) -> Result<()> {
     JuliafatouBuilder::default()
         .offset(args.off)
         .scale(args.scale)
