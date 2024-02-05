@@ -1,6 +1,6 @@
 use anyhow::Result;
 use clap::Parser;
-use imagekit::{ColorStyle, JuliafatouBuilder};
+use imagekit::JuliafatouBuilder;
 
 #[derive(Parser, Debug, Clone)]
 pub struct JuliafatouArgs {
@@ -55,7 +55,7 @@ pub struct JuliafatouArgs {
         value_enum,
         default_value = "greyscale"
     )]
-    cm: ColorStyle,
+    cm: String,
 
     /// difference between the two rendered julia sets
     #[clap(

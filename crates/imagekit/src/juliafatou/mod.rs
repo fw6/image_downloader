@@ -6,18 +6,19 @@ use std::{
     sync::Arc,
 };
 
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use clap::ValueEnum;
 use derive_builder::Builder;
 use image::{imageops::blur, ImageBuffer, ImageOutputFormat, Rgb};
 #[cfg(feature = "openapi")]
 use salvo::oapi::{ToParameters, ToSchema};
+use serde::de::Visitor;
 #[cfg(feature = "openapi")]
 use serde::Deserialize;
 use utils::*;
 
 // value enum for the command line argument parser
-#[derive(ValueEnum, Copy, Clone, Debug)]
+#[derive(ValueEnum, Copy, Clone, Debug, PartialEq)]
 #[cfg_attr(
     feature = "openapi",
     derive(Deserialize, ToSchema),
@@ -44,11 +45,11 @@ impl Default for ColorStyle {
     }
 }
 
-#[derive(Builder, Default)]
-#[cfg_attr(feature = "openapi", builder(derive(Deserialize, ToParameters)), builder_struct_attr(salvo(parameters(default_parameter_in = Query))))]
+#[derive(Builder, Default, Debug)]
+#[cfg_attr(feature = "openapi", builder(derive(ToParameters, Debug)), builder_struct_attr(salvo(parameters(default_parameter_in = Query))))]
 pub struct Juliafatou {
     /// Image dimensions
-    #[builder(setter(custom))]
+    #[builder(setter(custom), default = "(1200, 1200)")]
     #[cfg_attr(feature = "openapi", builder_field_attr(salvo(parameter(value_type = Option<String>, default = "1200x1200"))))]
     dimensions: (usize, usize),
 
@@ -58,7 +59,7 @@ pub struct Juliafatou {
     output_file: String,
 
     /// Offset for the viewpoint
-    #[builder(setter(custom))]
+    #[builder(setter(custom), default = "(0.0, 0.0)")]
     #[cfg_attr(feature = "openapi", builder_field_attr(salvo(parameter(value_type = Option<String>, default = "0.0,0.0"))))]
     offset: (f64, f64),
 
@@ -83,7 +84,7 @@ pub struct Juliafatou {
     factor: f64,
 
     /// Color gradient style
-    #[builder(default = "ColorStyle::Greyscale")]
+    #[builder(setter(custom), default = "ColorStyle::Greyscale")]
     #[cfg_attr(feature = "openapi", builder_field_attr(salvo(parameter(inline, value_type = Option<ColorStyle>, default = "ColorStyle::Greyscale"))))]
     color_style: ColorStyle,
 
@@ -147,6 +148,193 @@ impl JuliafatouBuilder {
         self.offset = Some((x, y));
 
         self
+    }
+
+    pub fn color_style(&mut self, color_style: String) -> &mut Self {
+        let style = match color_style.to_lowercase().as_str() {
+            "bookworm" => ColorStyle::Bookworm,
+            "jellyfish" => ColorStyle::Jellyfish,
+            "ten" => ColorStyle::Ten,
+            "eleven" => ColorStyle::Eleven,
+            "mint" => ColorStyle::Mint,
+            "greyscale" => ColorStyle::Greyscale,
+            "christmas" => ColorStyle::Christmas,
+            "chameleon" => ColorStyle::Chameleon,
+            "plasma" => ColorStyle::Plasma,
+            "plasma2" => ColorStyle::Plasma2,
+            "config" => ColorStyle::Config,
+            "random" => ColorStyle::Random,
+            _ => ColorStyle::Greyscale,
+        };
+
+        self.color_style = Some(style);
+
+        self
+    }
+}
+
+#[cfg(feature = "openapi")]
+impl<'de> Deserialize<'de> for JuliafatouBuilder {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct JuliafatouBuilderVisitor;
+
+        #[derive(Deserialize)]
+        #[serde(field_identifier, rename_all = "snake_case")]
+        enum JuliafatouBuilderField {
+            Dimensions,
+            OutputFile,
+            Offset,
+            Scale,
+            Blur,
+            Power,
+            Factor,
+            ColorStyle,
+            Diverge,
+            Complex,
+            Intensity,
+            Inverse,
+            Threads,
+            TakeTime,
+        }
+
+        impl<'de> Visitor<'de> for JuliafatouBuilderVisitor {
+            type Value = JuliafatouBuilder;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                formatter.write_str("struct JuliafatouBuilder")
+            }
+
+            fn visit_seq<A>(self, mut seq: A) -> std::result::Result<JuliafatouBuilder, A::Error>
+            where
+                A: serde::de::SeqAccess<'de>,
+            {
+                let mut builder = JuliafatouBuilder::default();
+
+                builder
+                    .dimensions(seq.next_element()?.unwrap_or(String::from("1200x1200")))
+                    .output_file(seq.next_element()?.unwrap_or(String::from("output.png")))
+                    .offset(seq.next_element()?.unwrap_or(String::from("0.0,0.0")))
+                    .scale(seq.next_element()?.unwrap_or(3.0))
+                    .blur(seq.next_element()?.unwrap_or(1.0))
+                    .power(seq.next_element()?.unwrap_or(2))
+                    .factor(seq.next_element()?.unwrap_or(-0.25))
+                    .color_style(seq.next_element()?.unwrap_or(String::from("greyscale")))
+                    .diverge(seq.next_element()?.unwrap_or(0.01))
+                    .complex(seq.next_element()?.unwrap_or(String::from("-0.4,0.6")))
+                    .intensity(seq.next_element()?.unwrap_or(3.0))
+                    .inverse(seq.next_element()?.unwrap_or(false))
+                    .threads(seq.next_element()?.unwrap_or(None))
+                    .take_time(seq.next_element()?.unwrap_or(false));
+
+                Ok(builder)
+            }
+
+            fn visit_map<A>(self, mut map: A) -> std::result::Result<JuliafatouBuilder, A::Error>
+            where
+                A: serde::de::MapAccess<'de>,
+            {
+                let mut builder = JuliafatouBuilder::default();
+
+                while let Some(key) = map.next_key()? {
+                    match key {
+                        JuliafatouBuilderField::Dimensions => {
+                            if let Ok(k) = map.next_value::<String>() {
+                                builder.dimensions(k);
+                            }
+                        }
+                        JuliafatouBuilderField::OutputFile => {
+                            if let Ok(k) = map.next_value::<String>() {
+                                builder.output_file(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Offset => {
+                            if let Ok(k) = map.next_value::<String>() {
+                                builder.offset(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Scale => {
+                            if let Ok(k) = map.next_value::<f64>() {
+                                builder.scale(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Blur => {
+                            if let Ok(k) = map.next_value::<f32>() {
+                                builder.blur(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Power => {
+                            if let Ok(k) = map.next_value::<u8>() {
+                                builder.power(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Factor => {
+                            if let Ok(k) = map.next_value::<f64>() {
+                                builder.factor(k);
+                            }
+                        }
+                        JuliafatouBuilderField::ColorStyle => {
+                            if let Ok(k) = map.next_value::<String>() {
+                                builder.color_style(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Diverge => {
+                            if let Ok(k) = map.next_value::<f64>() {
+                                builder.diverge(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Complex => {
+                            if let Ok(k) = map.next_value::<String>() {
+                                builder.complex(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Intensity => {
+                            if let Ok(k) = map.next_value::<f64>() {
+                                builder.intensity(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Inverse => {
+                            if let Ok(k) = map.next_value::<bool>() {
+                                builder.inverse(k);
+                            }
+                        }
+                        JuliafatouBuilderField::Threads => {
+                            if let Ok(k) = map.next_value::<Option<usize>>() {
+                                builder.threads(k);
+                            }
+                        }
+                        JuliafatouBuilderField::TakeTime => {
+                            if let Ok(k) = map.next_value::<bool>() {
+                                builder.take_time(k);
+                            }
+                        }
+                    }
+                }
+
+                Ok(builder)
+            }
+        }
+
+        const FIELDS: &'static [&'static str] = &[
+            "dimensions",
+            "output_file",
+            "offset",
+            "scale",
+            "blur",
+            "power",
+            "factor",
+            "color_style",
+            "diverge",
+            "complex",
+            "intensity",
+            "inverse",
+            "threads",
+            "take_time",
+        ];
+
+        deserializer.deserialize_struct("JuliafatouBuilder", FIELDS, JuliafatouBuilderVisitor)
     }
 }
 
@@ -260,7 +448,14 @@ impl Juliafatou {
     {
         if self.blur == 1.0 {
             if let Some(buffered_writer) = buffered_writer {
-                buffered_writer.write_all(pixels)?;
+                let internal_buf = ImageBuffer::<Rgb<u8>, &[u8]>::from_raw(
+                    self.dimensions.0 as u32,
+                    self.dimensions.1 as u32,
+                    &pixels,
+                )
+                .ok_or(anyhow!("error creating image buffer"))?;
+
+                internal_buf.write_to(buffered_writer, ImageOutputFormat::Png)?;
             } else {
                 image::save_buffer(
                     &self.output_file,
@@ -279,8 +474,7 @@ impl Juliafatou {
             self.dimensions.1 as u32,
             &pixels,
         )
-        .unwrap();
-        // .ok_or(anyhow!("error creating image buffer"))?;
+        .ok_or(anyhow!("error creating image buffer"))?;
 
         let blurred = blur(&internal_buf, self.blur);
 
@@ -295,13 +489,14 @@ impl Juliafatou {
     }
 
     // render the julia set to a buffer
-    pub fn save_to_buffer<W>(&self, mut buffered_writer: W) -> Result<()>
+    pub fn save_to_buffer<W>(&self, buffered_writer: &mut W) -> Result<()>
     where
         W: Write + Seek,
     {
         let pixels = self.get_pixels()?;
+        let buf = Some(buffered_writer);
 
-        self.blur_image(&pixels, Some(&mut buffered_writer))?;
+        self.blur_image(&pixels, buf)?;
 
         Ok(())
     }
@@ -330,6 +525,8 @@ impl Juliafatou {
 
 #[cfg(test)]
 mod tests {
+    use serde_json;
+
     use super::*;
 
     #[test]
@@ -371,5 +568,37 @@ mod tests {
 
         let mut buffer = Cursor::new(Vec::new());
         assert!(jf.save_to_buffer(&mut buffer).is_ok());
+    }
+
+    #[test]
+    #[cfg(feature = "openapi")]
+    fn test_juliafatou_builder_seq_deserialize() {
+        let jf = JuliafatouBuilder::deserialize(
+            &mut serde_json::Deserializer::from_str(
+                r#"["1200x1200", "output.png", "0.1,0.1", 3.0, 1.0, 2, -0.25, "greyscale", 0.1, "-0.4,0.6", 3.0, false, null, false]"#,
+            ),
+        )
+        .unwrap();
+
+        assert_eq!(jf.dimensions, Some((1200, 1200)));
+        assert_eq!(jf.threads, Some(None));
+        assert_eq!(jf.complex, Some(String::from("-0.4,0.6")));
+    }
+
+    #[test]
+    #[cfg(feature = "openapi")]
+    fn test_juliafatou_builder_map_deserialize() {
+        let jf = JuliafatouBuilder::deserialize(
+            &mut serde_json::Deserializer::from_str(
+                r#"{"dimensions":"1200x1200","output_file":"output.png","offset":"0.1,0.1","scale":3.0,"blur":1.0,"power":2,"factor":-0.25,"color_style":"greyscale","diverge":0.1,"complex":"-0.4,0.6","intensity":3.0,"inverse":false,"threads":null}"#,
+            ),
+        )
+        .unwrap();
+
+        assert_eq!(jf.dimensions, Some((1200, 1200)));
+        assert_eq!(jf.threads, Some(None));
+        assert_eq!(jf.complex, Some(String::from("-0.4,0.6")));
+        assert_eq!(jf.color_style, Some(ColorStyle::Greyscale));
+        assert_eq!(jf.take_time, None);
     }
 }

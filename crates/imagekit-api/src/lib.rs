@@ -1,25 +1,27 @@
-use imagekit::JuliafatouBuilder;
-use salvo::oapi::endpoint;
-use salvo::prelude::*;
-use serde::{Deserialize, Serialize};
+use std::io::Cursor;
 
-// TODO
+use imagekit::JuliafatouBuilder;
+use salvo::{http::response::ResBody, oapi::endpoint, prelude::*};
+
 // 排除OPENAPI传递的部分参数(take_time、output_file)
 #[endpoint(parameters(JuliafatouBuilder), responses(
     (status_code = 200, description = "success response")
 ))]
-pub async fn juliafatou(req: &mut Request) -> String {
-    let query = req.parse_queries::<User>().unwrap();
-    // query.id;
+pub async fn juliafatou(req: &mut Request, res: &mut Response) {
+    let jf: JuliafatouBuilder = req.parse_queries().expect("parse query params failed");
+    let jf = jf.build();
 
-    // query.
-    // format!("Hello, {}!", name.as_deref().unwrap_or("World"))
-    println!("{:?}", query);
-    format!("Hello, {}!", "World")
-}
+    if let Ok(jf) = jf {
+        let mut buffer = Cursor::new(Vec::new());
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
-struct User {
-    id: usize,
-    name: String,
+        let _ = jf.save_to_buffer(&mut buffer);
+        let vec = buffer.into_inner();
+
+        res.headers_mut()
+            .insert("Content-Type", "image/png".parse().unwrap());
+
+        res.body(ResBody::Once(vec.into()));
+    } else {
+        res.render(StatusError::internal_server_error().brief("error when build juliafatou image"));
+    }
 }
