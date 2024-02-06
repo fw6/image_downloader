@@ -27,7 +27,7 @@ image = { workspace = true, features = [
     "avif",
     "ico",
 ] }
-imagekit = { path = "../imagekit" }
+imagekit = { path = "../imagekit", features = ["cli"] }
 rayon.workspace = true
 reqwest = { workspace = true, default-features = false, features = ["stream"] }
 tokio.workspace = true

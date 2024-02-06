@@ -1,11 +1,15 @@
-use imagekit_api::juliafatou;
+mod avatar;
+mod juliafatou;
 use salvo::{logging::Logger, prelude::*};
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt().init();
 
-    let router = Router::new().push(Router::with_path("juliafatou.png").get(juliafatou));
+    let router = Router::new()
+        .push(Router::with_path("juliafatou.png").get(juliafatou::juliafatou))
+        .push(Router::with_path("avatar.png").get(avatar::avatar));
+
     let doc = OpenApi::new("imagekit api", env!("CARGO_PKG_VERSION")).merge_router(&router);
 
     let router = router

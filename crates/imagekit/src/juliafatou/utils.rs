@@ -1,10 +1,11 @@
+use std::fs::read_to_string;
+
 use anyhow::Result;
 use colorgrad::Color;
 use getrandom::getrandom;
 use num::Complex;
-use std::fs::read_to_string;
 
-use crate::ColorStyle;
+use super::ColorStyle;
 
 // calculate offset for viewpoint
 pub fn calculate_offset(

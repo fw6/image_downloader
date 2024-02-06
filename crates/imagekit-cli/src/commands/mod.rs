@@ -1,3 +1,4 @@
+mod avatar;
 mod download;
 mod juliafatou;
 use anyhow::Result;
@@ -26,6 +27,9 @@ enum Action {
     /// example: cargo run --package imagekit_cli --bin imagekit juliafatou
     /// --blur 0.6 --scale 1 -c eleven --complex -0.4,0.6 -w 3
     Juliafatou(juliafatou::JuliafatouArgs),
+
+    /// Generate an initial avatar
+    Avatar(imagekit::avatar::Avatar),
 }
 
 pub async fn handle() -> Result<()> {
@@ -34,6 +38,7 @@ pub async fn handle() -> Result<()> {
     let result = match args.action {
         Action::Download(args) => download::download(args).await,
         Action::Juliafatou(args) => juliafatou::gen_juliafatou(args).await,
+        Action::Avatar(args) => avatar::gen_avatar(args).await,
     };
 
     process_error_output(result)

@@ -1,6 +1,6 @@
 use anyhow::Result;
 use clap::Parser;
-use imagekit::JuliafatouBuilder;
+use imagekit::juliafatou::JuliafatouBuilder;
 
 #[derive(Parser, Debug, Clone)]
 pub struct JuliafatouArgs {

@@ -18,3 +18,4 @@ tracing-subscriber.workspace = true
 serde = { workspace = true, features = ["derive"] }
 serde_json.workspace = true
 imagekit = { path = "../imagekit", features = ["openapi"] }
+image.workspace = true

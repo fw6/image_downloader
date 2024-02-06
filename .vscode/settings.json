@@ -6,9 +6,12 @@
     },
     "cSpell.words": [
         "bindgen",
+        "ctrip",
+        "daisyui",
         "dylib",
         "Fatou",
         "feng",
+        "Hiragino",
         "juliafatou",
         "oapi",
         "ogimage",
@@ -16,6 +19,7 @@
         "schemars",
         "tauri",
         "uniffi",
+        "unpositioned",
         "unshift"
     ],
     "npm.packageManager": "pnpm",

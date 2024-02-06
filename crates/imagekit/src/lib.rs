@@ -2,8 +2,8 @@
 uniffi::setup_scaffolding!();
 
 pub mod download;
-mod juliafatou;
+pub mod juliafatou;
 pub mod utils;
 
-pub use juliafatou::{ColorStyle, Juliafatou, JuliafatouBuilder};
+pub mod avatar;
 pub mod ogimage;
