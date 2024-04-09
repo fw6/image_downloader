@@ -5,7 +5,6 @@ use std::{
 };
 
 use anyhow::{anyhow, Result};
-use clap::ValueEnum;
 use derive_builder::Builder;
 use image::{imageops::blur, ImageBuffer, ImageOutputFormat, Rgb};
 #[cfg(feature = "openapi")]
@@ -16,12 +15,13 @@ use serde::Deserialize;
 use crate::juliafatou::utils::*;
 
 // value enum for the command line argument parser
-#[derive(ValueEnum, Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 #[cfg_attr(
     feature = "openapi",
     derive(Deserialize, ToSchema),
     serde(rename_all = "snake_case")
 )]
+#[cfg_attr(feature = "cli", derive(clap::ValueEnum))]
 pub enum ColorStyle {
     Bookworm,
     Jellyfish,

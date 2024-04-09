@@ -1,0 +1,22 @@
+[package]
+name = "imagekit-json"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+rust-version.workspace = true
+categories = ["api-bindings"]
+description = """
+JSON bindings for the Imagekit SDK
+"""
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+schemars.workspace = true
+log.workspace = true
+imagekit = { version = "*", path = "../imagekit", features = ["cli"] }
+async-lock.workspace = true

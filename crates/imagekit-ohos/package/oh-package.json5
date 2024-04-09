@@ -1,0 +1,14 @@
+{
+  license: "Unlicense",
+  author: "feng.w",
+  name: "@ctrip/ohos-imagekit",
+  description: "Image toolkit for HarmonyOS, powered by ohos-rs.",
+  main: "index.ets",
+  version: "0.0.1",
+  repository: "https://git.dev.sh.ctripcorp.com/feng.w/imagekit",
+  types: "libs/index.d.ts",
+  "keywords": [
+    "image"
+  ],
+  dependencies: {}
+}

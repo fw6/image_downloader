@@ -14,6 +14,8 @@
         "build:crates": "cargo build --workspace --release",
         "build:uniffi": "cargo run --package uniffi-bindgen --bin uniffi-bindgen generate ./target/release/libimagekit_uniffi.dylib --library --language swift --language kotlin --no-format --out-dir tmp/bindings",
         "build:js": "nx run-many --target=build",
+        "build:wasm": "sh ./crates/imagekit-wasm/build.sh",
+        "build:ohos": "cd ./crates/imagekit-ohos && sh build.sh",
         "schemas": "rimraf ./support/schemas && cargo run --bin sdk-schemas --all-features && node ./support/scripts/schemas.mjs"
     },
     "keywords": [],

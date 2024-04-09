@@ -1,0 +1,21 @@
+{
+    "name": "@ctrip/imagekit-sdk.wasm",
+    "version": "0.0.1",
+    "files": [
+        "imagekit_wasm_bg.js",
+        "imagekit_wasm_bg.wasm",
+        "imagekit_wasm.d.ts",
+        "imagekit_wasm.js",
+        "index.js",
+        "node/imagekit_wasm_bg.wasm",
+        "node/imagekit_wasm_bg.wasm.d.ts",
+        "node/imagekit_wasm.d.ts",
+        "node/imagekit_wasm.js"
+    ],
+    "main": "node/imagekit_wasm.js",
+    "module": "index.js",
+    "types": "imagekit_wasm.d.ts",
+    "sideEffects": [
+        "imagekit_wasm.js"
+    ]
+}

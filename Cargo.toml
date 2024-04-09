@@ -45,6 +45,11 @@ salvo-oapi-macros = "0.65"
 tracing = "0.1.40"
 tracing-subscriber = "0.3.18"
 protobuf = "3.3.0"
+async-lock = "3.3"
+cfg-if = "1.0.0"
+
+# wasm-bindgen
+log = "0.4.20"
 
 [profile.dev]
 opt-level = 1
@@ -63,6 +68,14 @@ codegen-units = 1
 inherits = "release"
 lto = "thin"
 
+[profile.release.package."imagekit-ohos"]
+inherits = "release"
+opt-level = "z"
+debug = false
+strip = true
+codegen-units = 1
+incremental = false
+
 # Config for 'cargo dist'
 [workspace.metadata.dist]
 # The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
@@ -75,6 +88,9 @@ targets = [
     "aarch64-apple-darwin",
     "x86_64-apple-darwin",
     "x86_64-pc-windows-msvc",
+    # "aarch64-unknown-linux-ohos",
+    # "armv7-unknown-linux-ohos",
+    # "x86_64-unknown-linux-ohos",
 ]
 # CI backends to support
 ci = ["github"]

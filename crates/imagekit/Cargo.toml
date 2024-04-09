@@ -9,38 +9,36 @@ license.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["secrets"]
+default = []
 
-secrets = []  # Secrets manager API
-internal = [] # Internal testing methods
-openapi = []  # OpenAPI client
-cli = []      # CLI service
+openapi = ["dep:salvo", "dep:salvo-oapi-macros"] # OpenAPI client
+cli = ["dep:clap"]                               # CLI service
 
-mobile = ["uniffi", "internal"] # Mobile-specific features
-wasm-bindgen = []
+mobile = ["dep:uniffi"]         # Mobile-specific features
+wasm-bindgen = ["getrandom/js"]
 
 [dependencies]
 anyhow.workspace = true
-atty.workspace = true
-console.workspace = true
 futures-util.workspace = true
 image = { workspace = true }
 mime.workspace = true
 rayon.workspace = true
 reqwest.workspace = true
-rustls.workspace = true
 serde = { version = "1.0.195", features = ["derive"] }
 serde_json.workspace = true
 serde_json_lodash.workspace = true
-tokio.workspace = true
-uniffi = { workspace = true, optional = true, features = ["tokio"] }
 url.workspace = true
 num.workspace = true
 crossbeam.workspace = true
 colorgrad.workspace = true
 getrandom.workspace = true
-clap = { workspace = true }
-derive_builder = { workspace = true }
-salvo = { workspace = true, features = ["oapi"] }
-salvo-oapi-macros = { workspace = true }
 rusttype.workspace = true
+derive_builder.workspace = true
+kamadak-exif = "0.5.5"
+
+uniffi = { workspace = true, optional = true, features = ["tokio"] }
+clap = { workspace = true, optional = true }
+salvo = { workspace = true, optional = true, features = ["oapi"] }
+salvo-oapi-macros = { workspace = true, optional = true }
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt", "macros"] }

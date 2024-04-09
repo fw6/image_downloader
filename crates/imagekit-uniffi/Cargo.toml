@@ -17,7 +17,7 @@ bench = false
 [dependencies]
 schemars = { workspace = true }
 uniffi.workspace = true
-imagekit = { path = "../imagekit", features = ["mobile", "internal"] }
+imagekit = { path = "../imagekit", features = ["mobile"] }
 serde = { workspace = true, features = ["derive"] }
 
 [build-dependencies]

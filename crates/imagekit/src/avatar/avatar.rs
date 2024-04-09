@@ -2,8 +2,6 @@ use std::cmp;
 #[cfg(feature = "cli")]
 use std::str::FromStr;
 
-#[cfg(feature = "cli")]
-use clap::Parser;
 use derive_builder::Builder;
 use image::{imageops, DynamicImage, ImageBuffer, Rgba};
 use rusttype::{point, Font};
@@ -22,7 +20,7 @@ use super::{
 /// Generate an initial avatar
 #[derive(Builder)]
 #[cfg_attr(feature = "openapi", builder(derive(ToParameters, Deserialize, Debug)), builder_struct_attr(salvo(parameters(default_parameter_in = Query))))]
-#[cfg_attr(feature = "cli", derive(Parser, Debug, Clone))]
+#[cfg_attr(feature = "cli", derive(clap::Parser, Debug, Clone))]
 pub struct Avatar {
     /// Initial name of the avatar
     #[cfg_attr(feature = "openapi", builder_field_attr(salvo(parameter(value_type = Option<String>, required = true))))]
