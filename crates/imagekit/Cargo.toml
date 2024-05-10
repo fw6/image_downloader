@@ -40,5 +40,12 @@ uniffi = { workspace = true, optional = true, features = ["tokio"] }
 clap = { workspace = true, optional = true }
 salvo = { workspace = true, optional = true, features = ["oapi"] }
 salvo-oapi-macros = { workspace = true, optional = true }
+
+project-root.workspace = true
+rten.workspace = true
+rten-tensor.workspace = true
+rten-imageio.workspace = true
+ocrs.workspace = true
+
 [dev-dependencies]
 tokio = { workspace = true, features = ["rt", "macros"] }

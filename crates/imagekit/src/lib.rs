@@ -7,4 +7,5 @@ pub mod utils;
 
 pub mod avatar;
 pub mod exif;
+pub mod ocr;
 pub mod ogimage;

@@ -30,6 +30,9 @@ enum Action {
 
     /// Generate an initial avatar
     Avatar(imagekit::avatar::Avatar),
+
+    /// Recognize text from image
+    Ocr(imagekit::ocr::Ocrs),
 }
 
 pub async fn handle() -> Result<()> {
@@ -39,6 +42,7 @@ pub async fn handle() -> Result<()> {
         Action::Download(args) => download::download(args).await,
         Action::Juliafatou(args) => juliafatou::gen_juliafatou(args).await,
         Action::Avatar(args) => avatar::gen_avatar(args).await,
+        Action::Ocr(args) => args.recognize().await,
     };
 
     process_error_output(result)

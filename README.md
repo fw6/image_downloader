@@ -90,8 +90,8 @@ Options:
 - [x] 接入`uniffi`，支持跨平台调用
 - [ ] 支持编译为WebAssembly
 - [ ] 通过`napi-rs`支持Node.js调用
-- [ ] 支持鸿蒙系统调用([ohos-rs](https://github.com/ohos-rs))
-- [ ] 提供Open API支持及文档([openapi-generator](https://github.com/OpenAPITools/openapi-generator))
+- [x] 支持鸿蒙系统调用([ohos-rs](https://github.com/ohos-rs))
+- [x] 提供Open API支持及文档([openapi-generator](https://github.com/OpenAPITools/openapi-generator))
 - [ ] 提供RPC服务: [prost](https://docs.rs/prost/0.12.3/prost/) + [tonic](https://docs.rs/tonic/0.10.2/tonic/)
 - [x] 通过[`schemars`](https://docs.rs/schemars/latest/schemars/)为SDK生成`JSON Schema`文档
 - [x] 为各类目标语言提供类型定义文件([`quicktype`](https://www.npmjs.com/package/quicktype))

@@ -47,7 +47,11 @@ tracing-subscriber = "0.3.18"
 protobuf = "3.3.0"
 async-lock = "3.3"
 cfg-if = "1.0.0"
-
+ocrs = "0.5"
+rten = "0.4"
+rten-tensor = "0.4"
+rten-imageio = "0.4.0"
+project-root = "0.2.2"
 # wasm-bindgen
 log = "0.4.20"
 

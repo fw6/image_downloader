@@ -33,6 +33,11 @@ reqwest = { workspace = true, default-features = false, features = ["stream"] }
 tokio.workspace = true
 url.workspace = true
 num.workspace = true
+project-root.workspace = true
+rten.workspace = true
+rten-tensor.workspace = true
+rten-imageio.workspace = true
+ocrs.workspace = true
 
 [[bin]]
 name = "imagekit"

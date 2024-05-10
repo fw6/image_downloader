@@ -10,6 +10,7 @@
     "packageManager": "pnpm@8.11.0",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
+        "tree": "tree . -L 2 -I 'target|node_modules|tmp|pnpm-lock.yaml|UNLICENSE|README.md|LICENSE-MIT|Cargo.lock|CONTRIBUTING.md'",
         "dev:mobile-tauri": "nx run mobile-tauri:dev",
         "build:crates": "cargo build --workspace --release",
         "build:uniffi": "cargo run --package uniffi-bindgen --bin uniffi-bindgen generate ./target/release/libimagekit_uniffi.dylib --library --language swift --language kotlin --no-format --out-dir tmp/bindings",
